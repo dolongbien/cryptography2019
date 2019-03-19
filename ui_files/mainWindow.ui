@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>539</width>
+    <height>485</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/icon/image/lock.png</normaloff>:/icon/image/lock.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="encryptButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>260</y>
+      <width>101</width>
+      <height>38</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Encrypt</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>:/icon/image/folder_locked32.png</normaloff>:/icon/image/folder_locked32.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="removeButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>297</x>
+      <y>260</y>
+      <width>100</width>
+      <height>38</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Remove</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>:/icon/image/delete.png</normaloff>:/icon/image/delete.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>390</y>
+      <width>521</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSplitter" name="splitter">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>310</y>
+      <width>511</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <widget class="QRadioButton" name="desrdbtn">
+     <property name="text">
+      <string>DES</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="aesrdbtn">
+     <property name="text">
+      <string>AES</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="rsardbtn">
+     <property name="text">
+      <string>RSA</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>340</y>
+      <width>511</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Custom key</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>410</y>
+      <width>521</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>browse</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="decryptButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Decrypt</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icon/image/open-key-icon.png</normaloff>:/icon/image/open-key-icon.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>10</y>
+      <width>521</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::ExtendedSelection</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>260</y>
+      <width>170</width>
+      <height>38</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add File/Directory</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>:/icon/image/symbol_add.png</normaloff>:/icon/image/symbol_add.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>add_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>31</x>
+     <y>235</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>214</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>remove_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>240</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>417</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>encryptButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>encrypt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>468</x>
+     <y>240</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>290</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selection_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>231</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>259</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>decryptButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>decrypt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>538</x>
+     <y>307</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>212</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>352</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>text_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>160</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>139</x>
+     <y>303</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>add_file()</slot>
+  <slot>remove_file()</slot>
+  <slot>encrypt()</slot>
+  <slot>decrypt()</slot>
+  <slot>selection_changed()</slot>
+  <slot>browse()</slot>
+  <slot>text_changed()</slot>
+ </slots>
+</ui>
