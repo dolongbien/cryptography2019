@@ -99,8 +99,10 @@ class Main(QMainWindow):
                         self.message_box(str(end - start))
                         os.remove(tempfile)
                 elif self.ui.des.isChecked():
-                    pass
-                    # TODO
+                    if cipher.encrypt_DES():
+                        end = time.time()
+                        self.message_box(str(end - start))
+                        os.remove(tempfile)
                 elif self.ui.rsa.isChecked():
                     pass
                     # TODO
@@ -125,7 +127,13 @@ class Main(QMainWindow):
         if pass_dialog.exec_():
             password = pass_dialog.password()
             cipher = AllCipher(password, infile)
-            outfile = cipher.decrypt_AES()     
+            outfile = False
+            if self.ui.aes.isChecked():
+                outfile = cipher.decrypt_AES()  
+            elif self.ui.des.isChecked():
+                outfile = cipher.decrypt_DES()
+            elif self.ui.rsa.isChecked():
+                pass
             if outfile:
                 dir, fname = split(outfile)
                 prefix = fname.rsplit('.tar', 1)[0]+' '
