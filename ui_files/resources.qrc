@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>image/check.png</file>
+    <file>image/open-key-icon.png</file>
+    <file>image/delete.png</file>
+    <file>image/folder_locked32.png</file>
+    <file>image/lock.png</file>
+    <file>image/symbol_add.png</file>
+  </qresource>
+</RCC>
