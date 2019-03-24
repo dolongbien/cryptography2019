@@ -144,6 +144,7 @@ class Ui_MainWindow(object):
         self.listWidget.itemSelectionChanged.connect(MainWindow.selection_changed)
         self.decryptButton.clicked.connect(MainWindow.decrypt)
         self.pushButton.clicked.connect(MainWindow.browse)
+        self.integrityButton.clicked.connect(MainWindow.integrityCheck)
         self.lineEdit.textChanged['QString'].connect(MainWindow.text_changed)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         config.process_bar = self.progressBar
