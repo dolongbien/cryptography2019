@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icon">
+    <file>image/integrity.png</file>
     <file>image/check.png</file>
     <file>image/open-key-icon.png</file>
     <file>image/delete.png</file>
