@@ -29,7 +29,7 @@ from window_ui import Ui_MainWindow
 from key_ui import Ui_KeyDialog
 import config
 BOXTYPE = Enum('BoxType', 'SUCCESS ERROR')
-
+SUCCESS_MESS = "Encrypted successfully in "
 
 # Create a class for our main window
 class Main(QMainWindow):
@@ -39,16 +39,16 @@ class Main(QMainWindow):
         # This is always the same
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        config.process_bar.setRange(0,100)
 
     def add_file(self):
         """Add files or directories to the list of files/directories"""
-        #file_dialog = QFileDialog(self)
-        #if file_dialog.exec_():
-            #filenames = file_dialog.selectedFiles()
-            # bien: select multiple files at a time
-        filenames,_ = QFileDialog.getOpenFileNames(None, 'Please select file', './', None)
+            # select multiple files at a time
+        filenames,_ = QFileDialog.getOpenFileNames(None, 'Select one or more files', './', None)
         self.ui.listWidget.addItems(filenames)
-        self.ui.encryptButton.setEnabled(True)
+        if len(filenames)>0: # at least 1 file is selected
+            self.ui.encryptButton.setEnabled(True)
+        #self.ui.encryptButton.setEnabled(True)
 
     def remove_file(self):
         """Removes selected files (addresses) from the list"""
@@ -97,8 +97,9 @@ class Main(QMainWindow):
                     cipher = AllCipher(str(public_key), save_file, isRSA=True)
                     start = time.time()
                     if cipher.encrypt_RSA():
+                        config.process_bar.setValue(100)
                         end = time.time()
-                        self.message_box(str(end - start))
+                        self.message_box(SUCCESS_MESS + str(round((end - start),3)) + " s")
                         os.remove(tempfile)
             else:
                 pass_dialog = PasswordDlg(self)
@@ -109,18 +110,21 @@ class Main(QMainWindow):
                     # Encrypt ratio option: AES, DES
                     if self.ui.aes.isChecked():
                         if cipher.encrypt_AES():
+                            config.process_bar.setValue(100)
                             end = time.time()
-                            self.message_box(str(end - start))
+                            self.message_box(SUCCESS_MESS + str(round((end - start),3)) + " s")
                             os.remove(tempfile)
                     elif self.ui.des.isChecked():
                         if cipher.encrypt_DES():
+                            config.process_bar.setValue(100)
                             end = time.time()
-                            self.message_box(str(end - start))
+                            self.message_box(SUCCESS_MESS + str(round((end - start),3)) + " s")
                             os.remove(tempfile)
 
     def browse(self):
-        self.encrypted_file = QFileDialog.getOpenFileName()[0]
-        self.ui.lineEdit.setText(self.encrypted_file)
+        self.encrypted_file = QFileDialog.getOpenFileNames(None, 'Please select encrypted file', './', None)[0] 
+        # return a tuple, first is filename
+        self.ui.lineEdit.setText(self.encrypted_file[0])
 
     def text_changed(self):
         if self.ui.lineEdit.text():
@@ -129,6 +133,8 @@ class Main(QMainWindow):
             self.ui.decryptButton.setEnabled(False)
 
     def decrypt(self):
+        # reset process bar
+        config.process_bar.setValue(0)
         infile = self.ui.lineEdit.text()
         if not os.path.isfile(infile):
             self.message_box("File not found!")
@@ -152,6 +158,7 @@ class Main(QMainWindow):
                 elif self.ui.des.isChecked():
                     outfile = cipher.decrypt_DES()
         if outfile:
+            config.process_bar.setValue(100)
             dir, fname = split(outfile)
             prefix = fname.rsplit('.tar', 1)[0]+' '
             outdir = tempfile.mkdtemp(prefix=prefix, dir=dir)
@@ -163,6 +170,7 @@ class Main(QMainWindow):
     def message_box(self, text, type=BOXTYPE.SUCCESS):
         msgBox = QMessageBox()
         msgBox.setText(text)
+        msgBox.setWindowTitle("BKU Encryption Tool")
         if type == BOXTYPE.SUCCESS:
             pixmap = QtGui.QPixmap(":/icon/image/check.png")
         elif type == BOXTYPE.ERROR:
@@ -241,24 +249,6 @@ class RSADlg(QDialog):
                         private.write(key.export_key("PEM"))
                         public.close()
                         private.close()
-
-
-class ProgressDlg(QDialog):
-    """docstring for ProgressDlg"""
-    def __init__(self): 
-        super(ProgressDlg, self).__init__()
-        self.ui = Ui_ProgressDlg()
-        self.ui.setupUi(self)
-        self.ui.progressBar.setRange(0,1000)
-        self.ui.progressBar.setValue(0)
-        timer = QTimer(self)
-        timer.timeout.connect(self.advanceProgressBar)
-        timer.start(1000)
-
-    def advanceProgressBar(self):
-        curVal = self.ui.progressBar.value()
-        maxVal = self.ui.progressBar.maximum()
-        self.ui.progressBar.setValue(curVal + (maxVal - curVal) / 100)
 
 
 def main():
