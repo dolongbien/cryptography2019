@@ -298,9 +298,9 @@ class IntegrityDlg(QDialog):
 
     def verify(self):
         if self.hashOriginalFile == self.hashDecryptFile:
-            QMessageBox.information(self, "Integrity Check", "SHA256 Integrity Check match! File integrity is OK")
+            QMessageBox.information(self, "Integrity Check", "Integrity verificated!")
         else:
-            QMessageBox.warning(self, "Integrity Check", "SHA256 Integrity Check do not match! File Integrity is Error")
+            QMessageBox.warning(self, "Integrity Check", "Integrity verification has failed")
 
 def main():
 
