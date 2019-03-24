@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import hashlib
 import os
 import sys
 import tarfile
@@ -24,6 +24,7 @@ from Crypto.PublicKey import RSA
 
 # Import the compiled UI module
 # these modules are auto generated from .ui files designed in Qt Designer
+from integrityCheckDialog import Ui_IntegrityCheckDialog
 from rsa_ui import Ui_RSADialog
 from window_ui import Ui_MainWindow
 from key_ui import Ui_KeyDialog
@@ -167,6 +168,11 @@ class Main(QMainWindow):
             os.remove(outfile)
             self.message_box("Successful Decryption!")
 
+    def integrityCheck(self):
+        dialog = IntegrityDlg(self)
+        if dialog.exec_():
+            pass
+
     def message_box(self, text, type=BOXTYPE.SUCCESS):
         msgBox = QMessageBox()
         msgBox.setText(text)
@@ -250,6 +256,51 @@ class RSADlg(QDialog):
                         public.close()
                         private.close()
 
+class IntegrityDlg(QDialog):
+
+    def __init__(self, parent=None, master=False):
+        QDialog.__init__(self, parent=parent)
+
+        # This is always the same
+        self.ui = Ui_IntegrityCheckDialog()
+        self.ui.setupUi(self)
+
+        ok_button = self.ui.btnVerify
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icon/image/check.png"),
+                       QtGui.QIcon.Normal,
+                       QtGui.QIcon.Off)
+        ok_button.setIcon(icon)
+
+    def browseOriginalFile(self):
+        self.OriginalFile = QFileDialog.getOpenFileNames(None, 'Please select original file', './', None)[0]
+        if self.OriginalFile:
+            self.ui.edtOriginalFile.setText(self.OriginalFile[0])
+            sha256_hash = hashlib.sha256()
+            with open(self.OriginalFile[0], 'rb') as f:
+                # Read and update hash string value in blocks of 4K
+                for byte_block in iter(lambda: f.read(4096),b""):
+                    sha256_hash.update(byte_block)
+                self.hashOriginalFile = sha256_hash.hexdigest()
+                self.ui.edtHashValueOriginalFile.setText(self.hashOriginalFile)
+
+    def browseDecryptFile(self):
+        self.DecryptFile = QFileDialog.getOpenFileNames(None, 'Please select decrypt file', './', None)[0]
+        if self.DecryptFile:
+            self.ui.edtDecryptFile.setText(self.DecryptFile[0])
+            sha256_hash = hashlib.sha256()
+            with open(self.DecryptFile[0], 'rb') as f:
+                # Read and update hash string value in blocks of 4K
+                for byte_block in iter(lambda: f.read(4096),b""):
+                    sha256_hash.update(byte_block)
+                self.hashDecryptFile = sha256_hash.hexdigest()
+                self.ui.edtHashValueDecryptFile.setText(self.hashDecryptFile)
+
+    def verify(self):
+        if self.hashOriginalFile == self.hashDecryptFile:
+            QMessageBox.information(self, "Integrity Check", "SHA256 Integrity Check match! File integrity is OK")
+        else:
+            QMessageBox.warning(self, "Integrity Check", "SHA256 Integrity Check do not match! File Integrity is Error")
 
 def main():
 
