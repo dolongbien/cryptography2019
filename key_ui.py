@@ -69,9 +69,9 @@ class Ui_KeyDialog(object):
 
     def retranslateUi(self, KeyDialog):
         _translate = QtCore.QCoreApplication.translate
-        KeyDialog.setWindowTitle(_translate("KeyDialog", "Key"))
-        self.label.setText(_translate("KeyDialog", "Enter Your Key:"))
-        self.label_show.setText(_translate("KeyDialog", "<html><head/><body><p><a href=\"#\"><span style=\"color:#0000ff;\">Show Key</span></a></p></body></html>"))
+        KeyDialog.setWindowTitle(_translate("KeyDialog", "Password"))
+        self.label.setText(_translate("KeyDialog", "Enter Your Password:"))
+        self.label_show.setText(_translate("KeyDialog", "<html><head/><body><p><a href=\"#\"><span style=\"color:#0000ff;\">Show Password</span></a></p></body></html>"))
 
 import resources_rc
 
