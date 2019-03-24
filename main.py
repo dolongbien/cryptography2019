@@ -279,7 +279,7 @@ class IntegrityDlg(QDialog):
             sha256_hash = hashlib.sha256()
             with open(self.OriginalFile[0], 'rb') as f:
                 # Read and update hash string value in blocks of 4K
-                for byte_block in iter(lambda: f.read(4096),b""):
+                for byte_block in iter(lambda: f.read(8192),b""):
                     sha256_hash.update(byte_block)
                 self.hashOriginalFile = sha256_hash.hexdigest()
                 self.ui.edtHashValueOriginalFile.setText(self.hashOriginalFile)
@@ -291,7 +291,7 @@ class IntegrityDlg(QDialog):
             sha256_hash = hashlib.sha256()
             with open(self.DecryptFile[0], 'rb') as f:
                 # Read and update hash string value in blocks of 4K
-                for byte_block in iter(lambda: f.read(4096),b""):
+                for byte_block in iter(lambda: f.read(8192),b""):
                     sha256_hash.update(byte_block)
                 self.hashDecryptFile = sha256_hash.hexdigest()
                 self.ui.edtHashValueDecryptFile.setText(self.hashDecryptFile)
