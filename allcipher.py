@@ -207,7 +207,7 @@ class AllCipher():
 
                 while not end_loop:
                     chunk = blob[offset:offset + chunk_size]
-                    i = i + 32
+                    i = i + 3
                     if len(chunk) % chunk_size != 0:
                         end_loop = True
                         chunk += b" " * (chunk_size - len(chunk))

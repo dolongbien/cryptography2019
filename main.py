@@ -145,6 +145,7 @@ class Main(QMainWindow):
         if self.ui.rsa.isChecked():
             rsa_dialog = RSADlg(self)
             rsa_dialog.changeLabel("Private key: ")
+            start = time.time()
             if rsa_dialog.exec_():
                 private_key = rsa_dialog.path()
                 cipher = AllCipher(private_key, infile, isRSA=True)
@@ -155,9 +156,12 @@ class Main(QMainWindow):
                 password = pass_dialog.password()
                 cipher = AllCipher(password, infile)
                 if self.ui.aes.isChecked():
+                    start = time.time()
                     outfile = cipher.decrypt_AES()
                 elif self.ui.des.isChecked():
+                    start = time.time()
                     outfile = cipher.decrypt_DES()
+                
         if outfile:
             config.process_bar.setValue(100)
             dir, fname = split(outfile)
@@ -166,7 +170,8 @@ class Main(QMainWindow):
             with tarfile.open(outfile, 'r') as tar:
                 tar.extractall(outdir)
             os.remove(outfile)
-            self.message_box("Successful Decryption!")
+            end = time.time()
+            self.message_box("Successful Decryption In " + str(round((end - start),3)) + ' s')
 
     def integrityCheck(self):
         dialog = IntegrityDlg(self)
